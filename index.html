@@ -1,258 +1,374 @@
 <!DOCTYPE html>
-<html lang="ru" class="dark">
+<html lang="ru" class="theme-lavender">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wait.</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Социальный проект «Моральный скотч»</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Comfortaa (Headings) & Nunito (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+                        heading: ['Comfortaa', 'cursive'],
+                        body: ['Nunito', 'sans-serif'],
                     },
                     colors: {
-                        accent: {
-                            DEFAULT: '#6366f1',
-                            glow: '#818cf8',
+                        m3: {
+                            primary: 'var(--md-primary)',
+                            onPrimary: 'var(--md-on-primary)',
+                            primaryContainer: 'var(--md-primary-container)',
+                            onPrimaryContainer: 'var(--md-on-primary-container)',
+                            surface: 'var(--md-surface)',
+                            onSurface: 'var(--md-on-surface)',
+                            surfaceVariant: 'var(--md-surface-variant)',
+                            onSurfaceVariant: 'var(--md-on-surface-variant)',
+                            outline: 'var(--md-outline)',
+                            bg: 'var(--md-bg)',
                         }
+                    },
+                    borderRadius: {
+                        '3xl': '28px',
+                        '4xl': '36px',
                     }
                 }
             }
         }
     </script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Медленно и плавно мигающая точка */
-        @keyframes slowBlink {
-            0%, 100% {
-                opacity: 1;
-                filter: drop-shadow(0 0 18px rgba(99, 102, 241, 0.9));
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.12;
-                filter: drop-shadow(0 0 2px rgba(99, 102, 241, 0.1));
-                transform: scale(0.85);
-            }
+        /* Theme 1: Lavender (Default) */
+        .theme-lavender {
+            --md-primary: #6750A4;
+            --md-on-primary: #FFFFFF;
+            --md-primary-container: #EADDFF;
+            --md-on-primary-container: #21005D;
+            --md-surface: #FFFBFE;
+            --md-on-surface: #1C1B1F;
+            --md-surface-variant: #E7E0EC;
+            --md-on-surface-variant: #49454F;
+            --md-outline: #79747E;
+            --md-bg: #F6F2FA;
         }
 
-        .blinking-dot {
-            display: inline-block;
-            animation: slowBlink 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-            color: #6366f1;
-            transition: color 0.5s ease;
+        /* Theme 2: Dark Mode */
+        .theme-dark {
+            --md-primary: #D0BCFF;
+            --md-on-primary: #381E72;
+            --md-primary-container: #4F378B;
+            --md-on-primary-container: #EADDFF;
+            --md-surface: #1C1B1F;
+            --md-on-surface: #E6E1E5;
+            --md-surface-variant: #49454F;
+            --md-on-surface-variant: #CAC4D0;
+            --md-outline: #938F96;
+            --md-bg: #141218;
         }
 
-        /* Мягкое свечение заднего фона */
-        .ambient-glow {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.25;
-            pointer-events: none;
-            transition: all 0.8s ease-out;
+        /* Theme 3: Coral Sunset */
+        .theme-coral {
+            --md-primary: #984061;
+            --md-on-primary: #FFFFFF;
+            --md-primary-container: #FFD9E2;
+            --md-on-primary-container: #3E001D;
+            --md-surface: #FFF8F8;
+            --md-on-surface: #201A1B;
+            --md-surface-variant: #F2DDE1;
+            --md-on-surface-variant: #524346;
+            --md-outline: #857376;
+            --md-bg: #FAF0F2;
         }
 
-        /* Стили кастомного уведомления (toast) */
-        .toast {
-            transform: translateY(100px);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
-        }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--md-bg);
+            color: var(--md-on-surface);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Анимированный градиентный текст для статуса */
-        .gradient-text {
-            background: linear-gradient(135deg, #a5b4fc, #6366f1, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Comfortaa', cursive;
+        }
+
+        /* Dynamic SVG Masking for Custom Logo */
+        .dynamic-logo {
+            background-color: var(--md-primary);
+            mask: url('https://raw.githubusercontent.com/0smth0/Thoughts/17652b09f90fc4144272408706915b566002badf/resources/MTlogo.svg') no-repeat center / contain;
+            -webkit-mask: url('https://raw.githubusercontent.com/0smth0/Thoughts/17652b09f90fc4144272408706915b566002badf/resources/MTlogo.svg') no-repeat center / contain;
+            transition: background-color 0.3s ease;
         }
     </style>
 </head>
-<body class="bg-neutral-950 text-neutral-100 font-sans min-h-screen flex flex-col justify-between overflow-hidden relative selection:bg-indigo-500 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-m3-primary selection:text-white">
 
-    <!-- Фоновый Canvas для интерактивных плавающих частиц -->
-    <canvas id="particles-canvas" class="absolute inset-0 z-0 pointer-events-none"></canvas>
+    <header class="sticky top-0 z-40 bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline/10 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Logo & Project Title -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0" title="Логотип «Моральный скотч»"></div>
+                <div>
+                    <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-m3-onSurface leading-tight">
+                        Социальный проект «Моральный скотч»
+                    </h1>
+                    <p class="text-xs sm:text-sm text-m3-onSurfaceVariant font-medium">
+                        Платформа для молодых авторов • Помощь и информация
+                    </p>
+                </div>
+            </div>
 
-    <!-- Интерактивное свечение, следующее за курсором -->
-    <div id="cursor-glow" class="ambient-glow w-96 h-96 bg-indigo-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
-    <div class="ambient-glow w-80 h-80 bg-purple-600 top-1/4 left-1/4 z-0"></div>
+            <!-- Navigation & Theme Switcher -->
+            <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
+                <nav class="flex items-center gap-1 bg-m3-surfaceVariant/40 p-1 rounded-full text-xs sm:text-sm font-semibold">
+                    <button onclick="showSection('home')" id="nav-home" class="px-3 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary">
+                        Главная
+                    </button>
+                    <button onclick="showSection('articles')" id="nav-articles" class="px-3 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface">
+                        Статьи
+                    </button>
+                    <button onclick="showSection('instructions')" id="nav-instructions" class="px-3 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface">
+                        Инструкции
+                    </button>
+                </nav>
 
-    <!-- Шапка сайта с плашкой статуса -->
-    <header class="relative z-10 w-full max-w-7xl mx-auto p-6 md:p-10 flex justify-between items-center">
-        <div class="flex items-center space-x-3 bg-neutral-900/80 backdrop-blur-md border border-neutral-800/80 px-4 py-2 rounded-full shadow-lg">
-            <span class="relative flex h-2.5 w-2.5">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
-            </span>
-            <span class="text-xs uppercase tracking-widest text-neutral-400 font-medium">Сайт в разработке</span>
+                <!-- Dynamic Theme Palette Chooser -->
+                <div class="flex items-center gap-1 bg-m3-surfaceVariant/50 p-1 rounded-full border border-m3-outline/20">
+                    <button onclick="setTheme('lavender')" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white hover:scale-110 transition-transform" title="Тема: Лаванда"></button>
+                    <button onclick="setTheme('dark')" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white hover:scale-110 transition-transform" title="Тема: Тёмная"></button>
+                    <button onclick="setTheme('coral')" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white hover:scale-110 transition-transform" title="Тема: Коралл"></button>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Основной блок по центру -->
-    <main class="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 my-auto">
-        <!-- Главная надпись с медленно мигающей точкой -->
-        <div class="relative group cursor-default">
-            <h1 class="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-bold tracking-tight text-white transition-all duration-500 select-none">
-                Wait<span id="dot" class="blinking-dot">.</span>
-            </h1>
+    <main class="max-w-6xl mx-auto px-4 py-6 sm:py-10 flex-grow w-full">
+
+        <!-- ================= 1. HOME SECTION ================= -->
+        <div id="section-home" class="space-y-8 sm:space-y-12">
+            
+            <!-- Mission Banner (Visible ONLY on Home tab) -->
+            <section class="text-center max-w-3xl mx-auto py-8 sm:py-12">
+                <div class="inline-flex items-center gap-2 bg-m3-primaryContainer text-m3-onPrimaryContainer px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold mb-4">
+                    ✨ Цель нашего проекта
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-bold mb-3 text-m3-onSurface">
+                    Пространство творчества и поддержки
+                </h2>
+                <p class="text-m3-onSurfaceVariant text-sm sm:text-base leading-relaxed">
+                    Мы создаём площадку для молодых авторов и помогаем людям, которые ищут поддержку, полезную информацию и способы справиться с трудными жизненными ситуациями.
+                </p>
+            </section>
+
         </div>
 
-        <!-- Подзаголовок -->
-        <p class="mt-6 text-lg sm:text-xl text-neutral-400 max-w-md mx-auto font-light leading-relaxed">
-            Я создаю кое-что особенное.
-        </p>
+        <!-- ================= 2. ARTICLES SECTION (EMPTY PLACEHOLDER) ================= -->
+        <div id="section-articles" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Статьи</h2>
+                </div>
+                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline">
+                    ← На главную
+                </button>
+            </div>
+
+            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12">
+                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/50 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
+                    📝
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2">Раздел в подготовке</h3>
+                <p class="text-m3-onSurfaceVariant text-sm sm:text-base mb-6 leading-relaxed">
+                    Здесь пока ничего нет. Совсем скоро в этом разделе начнут появляться публикации, исследования и творчество наших авторов.
+                </p>
+                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant">
+                    ✨ Полезные статьи и акутальные рассуждения
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 3. INSTRUCTIONS SECTION (EMPTY PLACEHOLDER) ================= -->
+        <div id="section-instructions" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
+                </div>
+                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline">
+                    ← На главную
+                </button>
+            </div>
+
+            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12">
+                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/50 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
+                    📝
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2">Раздел в подготовке</h3>
+                <p class="text-m3-onSurfaceVariant text-sm sm:text-base mb-6 leading-relaxed">
+                    Здесь пока ничего нет. Совсем скоро в этом разделе начнут появляться публикации, исследования и творчество наших авторов.
+                </p>
+                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant">
+                    ✨ Полезные статьи и акутальные рассуждения
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 3. INSTRUCTIONS SECTION (EMPTY PLACEHOLDER) ================= -->
+        <div id="section-instructions" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
+                    <p class="text-sm text-m3-onSurfaceVariant mt-1">
+                        Пошаговые руководства, памятки и практическая информация.
+                    </p>
+                </div>
+                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline">
+                    ← На главную
+                </button>
+            </div>
+
+            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12">
+                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/50 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
+                    📋
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2">Раздел в подготовке</h3>
+                <p class="text-m3-onSurfaceVariant text-sm sm:text-base mb-6 leading-relaxed">
+                    Здесь пока ничего нет. Раздел предназначен для будущих практических инструкций и памяток самопомощи.
+                </p>
+                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant">
+                    💡 Практическая информация и гайды
+                </div>
+            </div>
+        </div>
+
+        <!-- Pinned Helpline Banner (Bottom Floating/Sticky across all tabs) -->
+        <section class="sticky bottom-4 z-30 mt-8 mb-2 bg-m3-surface/95 backdrop-blur-md border border-m3-primary/30 shadow-lg rounded-3xl p-4 sm:p-6 transition-all">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-m3-primaryContainer text-m3-primary flex items-center justify-center text-lg shrink-0">
+                        📞
+                    </div>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-bold text-m3-onSurface mb-0.5">
+                            Нужна психологическая помощь?
+                        </h4>
+                        <p class="text-xs sm:text-sm text-m3-onSurfaceVariant">
+                            Бесплатно, анонимно и круглосуточно: <strong class="text-m3-primary font-bold">8-800-200-01-22</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-center">
+                    <a href="tel:88002000122" class="px-5 py-2 bg-m3-primary text-m3-onPrimary font-bold rounded-full text-xs sm:text-sm hover:opacity-90 transition-opacity whitespace-nowrap">
+                        Позвонить
+                    </a>
+                    <button onclick="copyNumber('88002000122')" class="px-4 py-2 bg-m3-surfaceVariant/60 text-m3-onSurface font-semibold rounded-full text-xs sm:text-sm border border-m3-outline/20 hover:bg-m3-surfaceVariant transition-colors whitespace-nowrap">
+                        Скопировать
+                    </button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Подвал сайта -->
-    <footer class="relative z-10 w-full max-w-7xl mx-auto p-6 md:p-10 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-500 gap-4">
-
-        <div class="flex space-x-6 text-sm">
-            <a href="#" class="hover:text-neutral-300 transition-colors" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+    <footer class="bg-m3-surfaceVariant/40 border-t border-m3-outline/15 py-8 px-4 text-center text-xs sm:text-sm text-m3-onSurfaceVariant">
+        <div class="max-w-6xl mx-auto space-y-3">
+            <div class="flex justify-center items-center gap-2">
+                <div class="w-6 h-6 dynamic-logo"></div>
+                <span class="font-bold font-heading text-m3-onSurface">Социальный проект «Моральный скотч»</span>
+            </div>
+            <p>Платформа для молодых авторов • Поддержка и информация</p>
+            <p class="opacity-70">Все материалы создаются в образовательных и гуманитарных целях.</p>
         </div>
     </footer>
 
-    <!-- Кастомное всплывающее уведомление (Toast вместо alert) -->
-    <div id="toast" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-neutral-900 border border-neutral-700 text-neutral-100 px-6 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-        <span id="toast-message" class="text-sm font-medium">Спасибо! Мы уведомим вас о запуске.</span>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-m3-onSurface text-m3-surface px-5 py-3 rounded-2xl shadow-xl text-sm font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+        Скопировано!
     </div>
 
     <script>
-        // Установка текущего года в футере
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Динамическое слежение свечения за курсором мыши
-        const glow = document.getElementById('cursor-glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.left = `${e.clientX}px`;
-            glow.style.top = `${e.clientY}px`;
-        });
-
-        // Смена цветового акцента для мигающей точки
-        function changeTheme(color) {
-            const dot = document.getElementById('dot');
-            dot.style.color = color;
-            
-            // Обновляем CSS анимацию для свечения выбранного цвета
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes slowBlink {
-                    0%, 100% {
-                        opacity: 1;
-                        filter: drop-shadow(0 0 18px ${color});
-                        transform: scale(1);
-                    }
-                    50% {
-                        opacity: 0.12;
-                        filter: drop-shadow(0 0 2px ${color}33);
-                        transform: scale(0.85);
+        // 1. Navigation Controller
+        function showSection(sectionId) {
+            const sections = ['home', 'articles', 'instructions'];
+            sections.forEach(id => {
+                const el = document.getElementById('section-' + id);
+                if (el) {
+                    if (id === sectionId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
                     }
                 }
-            `;
-            document.head.appendChild(style);
-    <!-- Подвал сайта -->
-    <footer class="relative z-10 w-full max-w-7xl mx-auto p-6 md:p-10 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-500 gap-4">
-        <div>
-            &copy; <span id="year"></span> All rights reserved.
-        </div>
-        <div class="flex space-x-6 text-sm">
-            <a href="#" class="hover:text-neutral-300 transition-colors" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
-            <a href="#" class="hover:text-neutral-300 transition-colors" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#" class="hover:text-neutral-300 transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
-        </div>
-    </footer>
-
-    <script>
-        // Установка текущего года в футере
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Динамическое слежение свечения за курсором мыши
-        const glow = document.getElementById('cursor-glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.left = `${e.clientX}px`;
-            glow.style.top = `${e.clientY}px`;
-        });
-
-        // ----- Интерактивная система частиц на Canvas -----
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 1.5 + 0.5;
-                this.alpha = Math.random() * 0.5 + 0.1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-                    this.reset();
-                }
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            resize();
-            particles = [];
-            const particleCount = Math.floor((width * height) / 15000);
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
             });
-            requestAnimationFrame(animate);
+
+            // Update nav active states
+            const navHome = document.getElementById('nav-home');
+            const navArticles = document.getElementById('nav-articles');
+            const navInstructions = document.getElementById('nav-instructions');
+
+            if (navHome && navArticles && navInstructions) {
+                [navHome, navArticles, navInstructions].forEach(btn => {
+                    btn.classList.remove('bg-m3-primary', 'text-m3-onPrimary');
+                    btn.classList.add('text-m3-onSurfaceVariant');
+                });
+
+                if (sectionId === 'home') {
+                    navHome.classList.add('bg-m3-primary', 'text-m3-onPrimary');
+                    navHome.classList.remove('text-m3-onSurfaceVariant');
+                } else if (sectionId === 'articles') {
+                    navArticles.classList.add('bg-m3-primary', 'text-m3-onPrimary');
+                    navArticles.classList.remove('text-m3-onSurfaceVariant');
+                } else if (sectionId === 'instructions') {
+                    navInstructions.classList.add('bg-m3-primary', 'text-m3-onPrimary');
+                    navInstructions.classList.remove('text-m3-onSurfaceVariant');
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.addEventListener('resize', initParticles);
-        
-        // Запуск анимации частиц
-        initParticles();
-        animate();
+        // 2. Theme Selector
+        function setTheme(themeName) {
+            document.documentElement.className = '';
+            document.documentElement.classList.add('theme-' + themeName);
+        }
+
+        // 3. Quick Panic Exit Button (Esc / Redirect)
+        function panicExit() {
+            window.location.replace('https://ya.ru');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                panicExit();
+            }
+        });
+
+        // 4. Copy Number to Clipboard
+        function copyNumber(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const input = document.createElement('input');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            }
+
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            }
+        }
     </script>
 </body>
 </html>
