@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Социальный проект «Моральный скотч»</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Comfortaa (Headings) & Nunito (Body) -->
+
+    <!-- Google Fonts: Comfortaa & Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -31,11 +35,16 @@
                             onSurfaceVariant: 'var(--md-on-surface-variant)',
                             outline: 'var(--md-outline)',
                             bg: 'var(--md-bg)',
+                            cardBg: 'var(--md-card-bg)',
                         }
                     },
                     borderRadius: {
                         '3xl': '28px',
                         '4xl': '36px',
+                    },
+                    boxShadow: {
+                        'm3-sm': '0 2px 8px -2px rgba(0, 0, 0, 0.08), 0 1px 4px -1px rgba(0, 0, 0, 0.04)',
+                        'm3-md': '0 8px 24px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06)',
                     }
                 }
             }
@@ -43,7 +52,7 @@
     </script>
 
     <style>
-        /* Theme 1: Lavender (Default) */
+        /* Theme 1: Lavender (Default Light) */
         .theme-lavender {
             --md-primary: #6750A4;
             --md-on-primary: #FFFFFF;
@@ -55,9 +64,10 @@
             --md-on-surface-variant: #49454F;
             --md-outline: #79747E;
             --md-bg: #F6F2FA;
+            --md-card-bg: #FFFFFF;
         }
 
-        /* Theme 2: Dark Mode */
+        /* Theme 2: Material Dark */
         .theme-dark {
             --md-primary: #D0BCFF;
             --md-on-primary: #381E72;
@@ -69,6 +79,7 @@
             --md-on-surface-variant: #CAC4D0;
             --md-outline: #938F96;
             --md-bg: #141218;
+            --md-card-bg: #211F26;
         }
 
         /* Theme 3: Coral Sunset */
@@ -83,6 +94,7 @@
             --md-on-surface-variant: #524346;
             --md-outline: #857376;
             --md-bg: #FAF0F2;
+            --md-card-bg: #FFFFFF;
         }
 
         body {
@@ -96,7 +108,7 @@
             font-family: 'Comfortaa', cursive;
         }
 
-        /* Dynamic SVG Masking for Custom Logo */
+        /* Dynamic SVG Logo Masking */
         .dynamic-logo {
             background-color: var(--md-primary);
             mask: url('https://raw.githubusercontent.com/0smth0/Thoughts/17652b09f90fc4144272408706915b566002badf/resources/MTlogo.svg') no-repeat center / contain;
@@ -104,15 +116,41 @@
             transition: background-color 0.3s ease;
         }
     </style>
+
+    <script>
+        (function() {
+            // Read theme from URL parameter '?theme=...' or fall back to localStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            let themeParam = urlParams.get('theme');
+            
+            const validThemes = ['lavender', 'dark', 'coral'];
+            let currentTheme = 'lavender';
+
+            if (themeParam && validThemes.includes(themeParam)) {
+                currentTheme = themeParam;
+            } else {
+                const storedTheme = localStorage.getItem('user_theme');
+                if (storedTheme && validThemes.includes(storedTheme)) {
+                    currentTheme = storedTheme;
+                }
+            }
+
+            // Save active theme back to localStorage
+            localStorage.setItem('user_theme', currentTheme);
+
+            // Apply theme class to document element immediately
+            document.documentElement.className = 'theme-' + currentTheme;
+        })();
+    </script>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-m3-primary selection:text-white">
 
     <header class="sticky top-0 z-40 bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline/10 transition-colors">
         <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
             
-            <!-- Logo & Project Title -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0" title="Логотип «Моральный скотч»"></div>
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('home')">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0 transition-transform group-hover:scale-105" title="Логотип «Моральный скотч»"></div>
                 <div>
                     <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-m3-onSurface leading-tight">
                         Социальный проект «Моральный скотч»
@@ -125,23 +163,23 @@
 
             <!-- Navigation & Theme Switcher -->
             <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
-                <nav class="flex items-center gap-1 bg-m3-surfaceVariant/40 p-1 rounded-full text-xs sm:text-sm font-semibold">
-                    <button onclick="showSection('home')" id="nav-home" class="px-3 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary">
+                <nav class="flex items-center gap-1 bg-m3-surfaceVariant/40 p-1 rounded-full text-xs sm:text-sm font-semibold border border-m3-outline/10">
+                    <button onclick="showSection('home')" id="nav-home" class="px-3.5 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary shadow-sm">
                         Главная
                     </button>
-                    <button onclick="showSection('articles')" id="nav-articles" class="px-3 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface">
+                    <button onclick="showSection('articles')" id="nav-articles" class="px-3.5 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
                         Статьи
                     </button>
-                    <button onclick="showSection('instructions')" id="nav-instructions" class="px-3 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface">
+                    <button onclick="showSection('instructions')" id="nav-instructions" class="px-3.5 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
                         Инструкции
                     </button>
                 </nav>
 
-                <!-- Dynamic Theme Palette Chooser -->
-                <div class="flex items-center gap-1 bg-m3-surfaceVariant/50 p-1 rounded-full border border-m3-outline/20">
-                    <button onclick="setTheme('lavender')" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white hover:scale-110 transition-transform" title="Тема: Лаванда"></button>
-                    <button onclick="setTheme('dark')" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white hover:scale-110 transition-transform" title="Тема: Тёмная"></button>
-                    <button onclick="setTheme('coral')" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white hover:scale-110 transition-transform" title="Тема: Коралл"></button>
+                <!-- Dynamic Material Theme Chooser -->
+                <div class="flex items-center gap-1.5 bg-m3-surfaceVariant/50 p-1.5 rounded-full border border-m3-outline/20">
+                    <button onclick="setTheme('lavender')" id="btn-theme-lavender" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Лаванда"></button>
+                    <button onclick="setTheme('dark')" id="btn-theme-dark" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Тёмная"></button>
+                    <button onclick="setTheme('coral')" id="btn-theme-coral" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Коралл"></button>
                 </div>
             </div>
         </div>
@@ -152,120 +190,90 @@
         <!-- ================= 1. HOME SECTION ================= -->
         <div id="section-home" class="space-y-8 sm:space-y-12">
             
-            <!-- Mission Banner (Visible ONLY on Home tab) -->
-            <section class="text-center max-w-3xl mx-auto py-8 sm:py-12">
+            <!-- Mission Banner -->
+            <section class="text-center max-w-3xl mx-auto py-8 sm:py-12 px-4 bg-m3-cardBg rounded-4xl border border-m3-outline/10 shadow-m3-sm transition-colors">
                 <div class="inline-flex items-center gap-2 bg-m3-primaryContainer text-m3-onPrimaryContainer px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold mb-4">
                     ✨ Цель нашего проекта
                 </div>
-                <h2 class="text-2xl sm:text-4xl font-bold mb-3 text-m3-onSurface">
+                <h2 class="text-2xl sm:text-4xl font-bold mb-3 text-m3-onSurface tracking-tight">
                     Пространство творчества и поддержки
                 </h2>
-                <p class="text-m3-onSurfaceVariant text-sm sm:text-base leading-relaxed">
+                <p class="text-m3-onSurfaceVariant text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
                     Мы создаём площадку для молодых авторов и помогаем людям, которые ищут поддержку, полезную информацию и способы справиться с трудными жизненными ситуациями.
                 </p>
             </section>
 
         </div>
 
-        <!-- ================= 2. ARTICLES SECTION (EMPTY PLACEHOLDER) ================= -->
+        <!-- ================= 2. ARTICLES SECTION ================= -->
         <div id="section-articles" class="hidden space-y-6">
             <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Статьи</h2>
-                </div>
-                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline">
+                <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Статьи</h2>
+                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline flex items-center gap-1">
                     ← На главную
                 </button>
             </div>
 
-            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12">
-                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/50 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
+            <!-- Empty Placeholder -->
+            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12 backdrop-blur-sm">
+                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/60 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
                     📝
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold mb-2">Раздел в подготовке</h3>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2 text-m3-onSurface">Раздел в подготовке</h3>
                 <p class="text-m3-onSurfaceVariant text-sm sm:text-base mb-6 leading-relaxed">
                     Здесь пока ничего нет. Совсем скоро в этом разделе начнут появляться публикации, исследования и творчество наших авторов.
                 </p>
-                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant">
-                    ✨ Полезные статьи и акутальные рассуждения
+                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant border border-m3-outline/10">
+                    ✨ Полезные статьи и актуальные рассуждения
                 </div>
             </div>
         </div>
 
-        <!-- ================= 3. INSTRUCTIONS SECTION (EMPTY PLACEHOLDER) ================= -->
+        <!-- ================= 3. INSTRUCTIONS SECTION ================= -->
         <div id="section-instructions" class="hidden space-y-6">
             <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
-                </div>
-                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline">
+                <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
+                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline flex items-center gap-1">
                     ← На главную
                 </button>
             </div>
 
-            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12">
-                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/50 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
-                    📝
-                </div>
-                <h3 class="text-xl sm:text-2xl font-bold mb-2">Раздел в подготовке</h3>
-                <p class="text-m3-onSurfaceVariant text-sm sm:text-base mb-6 leading-relaxed">
-                    Здесь пока ничего нет. Совсем скоро в этом разделе начнут появляться публикации, исследования и творчество наших авторов.
-                </p>
-                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant">
-                    ✨ Полезные статьи и акутальные рассуждения
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= 3. INSTRUCTIONS SECTION (EMPTY PLACEHOLDER) ================= -->
-        <div id="section-instructions" class="hidden space-y-6">
-            <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
-                    <p class="text-sm text-m3-onSurfaceVariant mt-1">
-                        Пошаговые руководства, памятки и практическая информация.
-                    </p>
-                </div>
-                <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline">
-                    ← На главную
-                </button>
-            </div>
-
-            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12">
-                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/50 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
+            <!-- Empty Placeholder -->
+            <div class="bg-m3-surfaceVariant/30 border border-dashed border-m3-outline/40 rounded-3xl p-10 sm:p-16 text-center max-w-2xl mx-auto my-12 backdrop-blur-sm">
+                <div class="w-16 h-16 rounded-full bg-m3-primaryContainer/60 text-m3-primary flex items-center justify-center text-3xl mx-auto mb-4">
                     📋
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold mb-2">Раздел в подготовке</h3>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2 text-m3-onSurface">Раздел в подготовке</h3>
                 <p class="text-m3-onSurfaceVariant text-sm sm:text-base mb-6 leading-relaxed">
                     Здесь пока ничего нет. Раздел предназначен для будущих практических инструкций и памяток самопомощи.
                 </p>
-                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant">
+                <div class="inline-flex items-center gap-2 bg-m3-surfaceVariant px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant border border-m3-outline/10">
                     💡 Практическая информация и гайды
                 </div>
             </div>
         </div>
 
         <!-- Pinned Helpline Banner (Bottom Floating/Sticky across all tabs) -->
-        <section class="sticky bottom-4 z-30 mt-8 mb-2 bg-m3-surface/95 backdrop-blur-md border border-m3-primary/30 shadow-lg rounded-3xl p-4 sm:p-6 transition-all">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-m3-primaryContainer text-m3-primary flex items-center justify-center text-lg shrink-0">
+        <section class="sticky bottom-3 z-30 mt-8 mb-1 bg-m3-surface/95 backdrop-blur-md border border-m3-primary/30 shadow-m3-md rounded-3xl py-2.5 px-4 sm:py-3 sm:px-6 transition-all">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-m3-primaryContainer text-m3-primary flex items-center justify-center text-sm shrink-0">
                         📞
                     </div>
                     <div>
-                        <h4 class="text-base sm:text-lg font-bold text-m3-onSurface mb-0.5">
+                        <h4 class="text-xs sm:text-sm font-bold text-m3-onSurface leading-snug">
                             Нужна психологическая помощь?
                         </h4>
-                        <p class="text-xs sm:text-sm text-m3-onSurfaceVariant">
+                        <p class="text-xs text-m3-onSurfaceVariant">
                             Бесплатно, анонимно и круглосуточно: <strong class="text-m3-primary font-bold">8-800-200-01-22</strong>
                         </p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <a href="tel:88002000122" class="px-5 py-2 bg-m3-primary text-m3-onPrimary font-bold rounded-full text-xs sm:text-sm hover:opacity-90 transition-opacity whitespace-nowrap">
+                    <a href="tel:88002000122" class="px-4 py-1.5 bg-m3-primary text-m3-onPrimary font-bold rounded-full text-xs hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm">
                         Позвонить
                     </a>
-                    <button onclick="copyNumber('88002000122')" class="px-4 py-2 bg-m3-surfaceVariant/60 text-m3-onSurface font-semibold rounded-full text-xs sm:text-sm border border-m3-outline/20 hover:bg-m3-surfaceVariant transition-colors whitespace-nowrap">
+                    <button onclick="copyNumber('88002000122')" class="px-3.5 py-1.5 bg-m3-surfaceVariant/60 text-m3-onSurface font-semibold rounded-full text-xs border border-m3-outline/20 hover:bg-m3-surfaceVariant transition-colors whitespace-nowrap">
                         Скопировать
                     </button>
                 </div>
@@ -274,19 +282,19 @@
 
     </main>
 
-    <footer class="bg-m3-surfaceVariant/40 border-t border-m3-outline/15 py-8 px-4 text-center text-xs sm:text-sm text-m3-onSurfaceVariant">
-        <div class="max-w-6xl mx-auto space-y-3">
+    <footer class="bg-m3-surfaceVariant/40 border-t border-m3-outline/15 py-6 px-4 text-center text-xs sm:text-sm text-m3-onSurfaceVariant">
+        <div class="max-w-6xl mx-auto space-y-2">
             <div class="flex justify-center items-center gap-2">
-                <div class="w-6 h-6 dynamic-logo"></div>
+                <div class="w-5 h-5 dynamic-logo"></div>
                 <span class="font-bold font-heading text-m3-onSurface">Социальный проект «Моральный скотч»</span>
             </div>
             <p>Платформа для молодых авторов • Поддержка и информация</p>
-            <p class="opacity-70">Все материалы создаются в образовательных и гуманитарных целях.</p>
+            <p class="opacity-70 text-[11px]">Все материалы создаются в образовательных и гуманитарных целях.</p>
         </div>
     </footer>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 bg-m3-onSurface text-m3-surface px-5 py-3 rounded-2xl shadow-xl text-sm font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+    <div id="toast" class="fixed bottom-16 right-6 bg-m3-onSurface text-m3-surface px-5 py-2.5 rounded-2xl shadow-xl text-xs font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
         Скопировано!
     </div>
 
@@ -312,18 +320,18 @@
 
             if (navHome && navArticles && navInstructions) {
                 [navHome, navArticles, navInstructions].forEach(btn => {
-                    btn.classList.remove('bg-m3-primary', 'text-m3-onPrimary');
+                    btn.classList.remove('bg-m3-primary', 'text-m3-onPrimary', 'shadow-sm');
                     btn.classList.add('text-m3-onSurfaceVariant');
                 });
 
                 if (sectionId === 'home') {
-                    navHome.classList.add('bg-m3-primary', 'text-m3-onPrimary');
+                    navHome.classList.add('bg-m3-primary', 'text-m3-onPrimary', 'shadow-sm');
                     navHome.classList.remove('text-m3-onSurfaceVariant');
                 } else if (sectionId === 'articles') {
-                    navArticles.classList.add('bg-m3-primary', 'text-m3-onPrimary');
+                    navArticles.classList.add('bg-m3-primary', 'text-m3-onPrimary', 'shadow-sm');
                     navArticles.classList.remove('text-m3-onSurfaceVariant');
                 } else if (sectionId === 'instructions') {
-                    navInstructions.classList.add('bg-m3-primary', 'text-m3-onPrimary');
+                    navInstructions.classList.add('bg-m3-primary', 'text-m3-onPrimary', 'shadow-sm');
                     navInstructions.classList.remove('text-m3-onSurfaceVariant');
                 }
             }
@@ -331,13 +339,53 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. Theme Selector
+        // 2. Theme Manager with URL Parameter Transmission & LocalStorage Persistence
         function setTheme(themeName) {
-            document.documentElement.className = '';
-            document.documentElement.classList.add('theme-' + themeName);
+            const validThemes = ['lavender', 'dark', 'coral'];
+            if (!validThemes.includes(themeName)) return;
+
+            // 1. Apply theme to HTML document
+            document.documentElement.className = 'theme-' + themeName;
+
+            // 2. Persist in LocalStorage
+            localStorage.setItem('user_theme', themeName);
+
+            // 3. Update URL query parameter seamlessly without page reload
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('theme', themeName);
+                window.history.replaceState({}, '', url.toString());
+            } catch (e) {
+                console.error("URL update prevented:", e);
+            }
+
+            // 4. Update outgoing links to carry the current theme
+            updateOutgoingLinksTheme(themeName);
         }
 
-        // 3. Quick Panic Exit Button (Esc / Redirect)
+        // Propagate ?theme= parameter to external/sub-domain links automatically
+        function updateOutgoingLinksTheme(themeName) {
+            document.querySelectorAll('a').forEach(anchor => {
+                const href = anchor.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('tel:') && !href.startsWith('javascript:')) {
+                    try {
+                        const targetUrl = new URL(href, window.location.origin);
+                        targetUrl.searchParams.set('theme', themeName);
+                        anchor.setAttribute('href', targetUrl.toString());
+                    } catch (e) {
+                        // Relative path or plain URL handling
+                    }
+                }
+            });
+        }
+
+        // Initialize Theme on Page Load
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = localStorage.getItem('user_theme') || 'lavender';
+            setTheme(currentTheme);
+        });
+
+        // 3. Quick Panic Exit Shortcut (Esc key redirect)
         function panicExit() {
             window.location.replace('https://ya.ru');
         }
@@ -348,7 +396,7 @@
             }
         });
 
-        // 4. Copy Number to Clipboard
+        // 4. Copy Helpline Number to Clipboard
         function copyNumber(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text);
@@ -366,7 +414,7 @@
                 toast.classList.remove('opacity-0');
                 setTimeout(() => {
                     toast.classList.add('opacity-0');
-                }, 2000);
+                }, 2200);
             }
         }
     </script>
