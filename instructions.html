@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-lavender">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Социальный проект «Моральный скотч» — Инструкции</title>
+
+    <!-- Google Fonts: Comfortaa & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Comfortaa', 'cursive'],
+                        body: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        m3: {
+                            primary: 'var(--md-primary)',
+                            onPrimary: 'var(--md-on-primary)',
+                            primaryContainer: 'var(--md-primary-container)',
+                            onPrimaryContainer: 'var(--md-on-primary-container)',
+                            surface: 'var(--md-surface)',
+                            onSurface: 'var(--md-on-surface)',
+                            surfaceVariant: 'var(--md-surface-variant)',
+                            onSurfaceVariant: 'var(--md-on-surface-variant)',
+                            outline: 'var(--md-outline)',
+                            bg: 'var(--md-bg)',
+                            cardBg: 'var(--md-card-bg)',
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '28px',
+                        '4xl': '36px',
+                    },
+                    boxShadow: {
+                        'm3-sm': '0 2px 8px -2px rgba(0, 0, 0, 0.08), 0 1px 4px -1px rgba(0, 0, 0, 0.04)',
+                        'm3-md': '0 8px 24px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .theme-lavender {
+            --md-primary: #6750A4;
+            --md-on-primary: #FFFFFF;
+            --md-primary-container: #EADDFF;
+            --md-on-primary-container: #21005D;
+            --md-surface: #FFFBFE;
+            --md-on-surface: #1C1B1F;
+            --md-surface-variant: #E7E0EC;
+            --md-on-surface-variant: #49454F;
+            --md-outline: #79747E;
+            --md-bg: #F6F2FA;
+            --md-card-bg: #FFFFFF;
+        }
+
+        .theme-dark {
+            --md-primary: #D0BCFF;
+            --md-on-primary: #381E72;
+            --md-primary-container: #4F378B;
+            --md-on-primary-container: #EADDFF;
+            --md-surface: #1C1B1F;
+            --md-on-surface: #E6E1E5;
+            --md-surface-variant: #49454F;
+            --md-on-surface-variant: #CAC4D0;
+            --md-outline: #938F96;
+            --md-bg: #141218;
+            --md-card-bg: #211F26;
+        }
+
+        .theme-coral {
+            --md-primary: #984061;
+            --md-on-primary: #FFFFFF;
+            --md-primary-container: #FFD9E2;
+            --md-on-primary-container: #3E001D;
+            --md-surface: #FFF8F8;
+            --md-on-surface: #201A1B;
+            --md-surface-variant: #F2DDE1;
+            --md-on-surface-variant: #524346;
+            --md-outline: #857376;
+            --md-bg: #FAF0F2;
+            --md-card-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--md-bg);
+            color: var(--md-on-surface);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Comfortaa', cursive;
+        }
+
+        .dynamic-logo {
+            background-color: var(--md-primary);
+            mask: url('https://raw.githubusercontent.com/0smth0/Thoughts/17652b09f90fc4144272408706915b566002badf/resources/MTlogo.svg') no-repeat center / contain;
+            -webkit-mask: url('https://raw.githubusercontent.com/0smth0/Thoughts/17652b09f90fc4144272408706915b566002badf/resources/MTlogo.svg') no-repeat center / contain;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let themeParam = urlParams.get('theme');
+            
+            const validThemes = ['lavender', 'dark', 'coral'];
+            let currentTheme = 'lavender';
+
+            if (themeParam && validThemes.includes(themeParam)) {
+                currentTheme = themeParam;
+            } else {
+                const storedTheme = localStorage.getItem('user_theme');
+                if (storedTheme && validThemes.includes(storedTheme)) {
+                    currentTheme = storedTheme;
+                }
+            }
+
+            localStorage.setItem('user_theme', currentTheme);
+            document.documentElement.className = 'theme-' + currentTheme;
+        })();
+    </script>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-m3-primary selection:text-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline/10 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0 transition-transform group-hover:scale-105" title="Логотип «Моральный скотч»"></div>
+                <div>
+                    <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-m3-onSurface leading-tight">
+                        Социальный проект «Моральный скотч»
+                    </h1>
+                    <p class="text-xs sm:text-sm text-m3-onSurfaceVariant font-medium">
+                        Платформа для молодых авторов • Помощь и информация
+                    </p>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
+                <nav class="flex items-center gap-1 bg-m3-surfaceVariant/40 p-1 rounded-full text-xs sm:text-sm font-semibold border border-m3-outline/10">
+                    <a href="index.html" class="px-3.5 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
+                        Главная
+                    </a>
+                    <a href="articles.html" class="px-3.5 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
+                        Статьи
+                    </a>
+                    <a href="instructions.html" class="px-3.5 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary shadow-sm">
+                        Инструкции
+                    </a>
+                </nav>
+
+                <div class="flex items-center gap-1.5 bg-m3-surfaceVariant/50 p-1.5 rounded-full border border-m3-outline/20">
+                    <button onclick="setTheme('lavender')" id="btn-theme-lavender" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Лаванда"></button>
+                    <button onclick="setTheme('dark')" id="btn-theme-dark" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Тёмная"></button>
+                    <button onclick="setTheme('coral')" id="btn-theme-coral" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Коралл"></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-6 sm:py-10 flex-grow w-full space-y-6">
+
+        <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
+            <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
+            <a href="index.html" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline flex items-center gap-1">
+                ← На главную
+            </a>
+        </div>
+
+        <!-- Instructions Grid Container -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+
+            <!-- ==================================================================== -->
+            <!-- Шаблон карточки инструкции (Скопируйте этот блок для добавления новой) -->
+            <!-- ==================================================================== -->
+            <a href="https://moraltape.github.io/instr/joint/vyhod/b" class="instruction-card group relative block overflow-hidden rounded-3xl aspect-[3/4] shadow-m3-sm hover:shadow-m3-md transition-all duration-300 transform hover:-translate-y-1 border border-m3-outline/15 bg-m3-surfaceVariant/30">
+                <!-- Обложка -->
+                <img src="https://raw.githubusercontent.com/moraltape/res/refs/heads/main/instr/joint/vyhod/cover.jpg" 
+                     alt="Буллинг что это, и как с ним бороться?" 
+                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                     loading="lazy" />
+                
+                <!-- Тёмный градиент для читаемости текста поверх обложки -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex flex-col justify-end p-4 sm:p-5 text-white">
+                    <span class="inline-block self-start bg-m3-primary text-m3-onPrimary text-[10px] sm:text-[11px] font-bold px-3 py-1 rounded-full mb-2 shadow-sm">
+                        Инструкция
+                    </span>
+                    <h3 class="text-sm sm:text-base font-bold font-heading leading-snug drop-shadow-md group-hover:text-m3-primaryContainer transition-colors">
+                        Буллинг что это, и как с ним бороться?
+                    </h3>
+                </div>
+            </a>
+            <!-- ================= Конец шаблона карточки ================= -->
+
+        </div>
+
+        <!-- Helpline Banner -->
+        <section class="bg-m3-surface/95 backdrop-blur-md border border-m3-primary/30 shadow-m3-md rounded-3xl py-2.5 px-4 sm:py-3 sm:px-6 transition-all mt-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-m3-primaryContainer text-m3-primary flex items-center justify-center text-sm shrink-0">
+                        📞
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-m3-onSurface leading-snug">
+                            Нужна психологическая помощь?
+                        </h4>
+                        <p class="text-xs text-m3-onSurfaceVariant">
+                            Бесплатно, анонимно и круглосуточно: <strong class="text-m3-primary font-bold">8-800-200-01-22</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-center">
+                    <a href="tel:88002000122" class="px-4 py-1.5 bg-m3-primary text-m3-onPrimary font-bold rounded-full text-xs hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm">
+                        Позвонить
+                    </a>
+                    <button onclick="copyNumber('88002000122')" class="px-3.5 py-1.5 bg-m3-surfaceVariant/60 text-m3-onSurface font-semibold rounded-full text-xs border border-m3-outline/20 hover:bg-m3-surfaceVariant transition-colors whitespace-nowrap">
+                        Скопировать
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-m3-surfaceVariant/40 border-t border-m3-outline/15 py-6 px-4 text-center text-xs sm:text-sm text-m3-onSurfaceVariant">
+        <div class="max-w-6xl mx-auto space-y-2">
+            <div class="flex justify-center items-center gap-2">
+                <div class="w-5 h-5 dynamic-logo"></div>
+                <span class="font-bold font-heading text-m3-onSurface">Социальный проект «Моральный скотч»</span>
+            </div>
+            <p>Платформа для молодых авторов • Поддержка и информация</p>
+            <p class="opacity-70 text-[11px]">Все материалы создаются в образовательных и гуманитарных целях.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-16 right-6 bg-m3-onSurface text-m3-surface px-5 py-2.5 rounded-2xl shadow-xl text-xs font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+        Скопировано!
+    </div>
+
+    <script>
+        function setTheme(themeName) {
+            const validThemes = ['lavender', 'dark', 'coral'];
+            if (!validThemes.includes(themeName)) return;
+
+            document.documentElement.className = 'theme-' + themeName;
+            localStorage.setItem('user_theme', themeName);
+
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('theme', themeName);
+                window.history.replaceState({}, '', url.toString());
+            } catch (e) {
+                console.error("URL update prevented:", e);
+            }
+
+            updateOutgoingLinksTheme(themeName);
+        }
+
+        function updateOutgoingLinksTheme(themeName) {
+            document.querySelectorAll('a').forEach(anchor => {
+                const href = anchor.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('tel:') && !href.startsWith('javascript:')) {
+                    try {
+                        const targetUrl = new URL(href, window.location.origin);
+                        targetUrl.searchParams.set('theme', themeName);
+                        anchor.setAttribute('href', targetUrl.toString());
+                    } catch (e) {}
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = localStorage.getItem('user_theme') || 'lavender';
+            setTheme(currentTheme);
+        });
+
+        function panicExit() {
+            window.location.replace('https://ya.ru');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                panicExit();
+            }
+        });
+
+        function copyNumber(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const input = document.createElement('input');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            }
+
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2200);
+            }
+        }
+    </script>
+</body>
+</html>
