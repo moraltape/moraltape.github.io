@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Страница не найдена | Моральный скотч</title>
+    
+    <!-- Подключение шрифтов Comfortaa и Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Comfortaa', 'cursive'],
+                        body: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        m3: {
+                            lavender: {
+                                bg: '#f5f3ff',
+                                surface: '#ffffff',
+                                primary: '#7c3aed',
+                                primaryHover: '#6d28d9',
+                                text: '#1e1b4b',
+                                secondary: '#4c1d95'
+                            },
+                            dark: {
+                                bg: '#0f172a',
+                                surface: '#1e293b',
+                                primary: '#a78bfa',
+                                primaryHover: '#c4b5fd',
+                                text: '#f8fafc',
+                                secondary: '#cbd5e1'
+                            },
+                            coral: {
+                                bg: '#fff1f2',
+                                surface: '#ffffff',
+                                primary: '#e11d48',
+                                primaryHover: '#be123c',
+                                text: '#4c0519',
+                                secondary: '#881337'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Темы Material You */
+        body.theme-lavender {
+            background-color: #f5f3ff;
+            color: #1e1b4b;
+        }
+        .theme-lavender .bg-card { background-color: #ffffff; }
+        .theme-lavender .btn-primary { background-color: #7c3aed; color: #ffffff; }
+        .theme-lavender .btn-primary:hover { background-color: #6d28d9; }
+
+        body.theme-dark {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .theme-dark .bg-card { background-color: #1e293b; }
+        .theme-dark .btn-primary { background-color: #a78bfa; color: #0f172a; }
+        .theme-dark .btn-primary:hover { background-color: #c4b5fd; }
+
+        body.theme-coral {
+            background-color: #fff1f2;
+            color: #4c0519;
+        }
+        .theme-coral .bg-card { background-color: #ffffff; }
+        .theme-coral .btn-primary { background-color: #e11d48; color: #ffffff; }
+        .theme-coral .btn-primary:hover { background-color: #be123c; }
+    </style>
+
+    <!-- Скрипт подгрузки сохраненной темы перед отображением -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let currentTheme = urlParams.get('theme') || localStorage.getItem('user_theme') || 'lavender';
+            localStorage.setItem('user_theme', currentTheme);
+            document.documentElement.className = 'theme-' + currentTheme;
+        })();
+    </script>
+</head>
+<body class="theme-lavender min-h-screen flex flex-col justify-between p-4 sm:p-8">
+
+    <!-- Шапка без логотипа -->
+    <header class="max-w-4xl mx-auto w-full flex items-center justify-between py-4">
+        <a href="/" id="home-link" class="flex items-center group">
+            <span class="font-heading font-bold text-lg sm:text-xl transition-opacity group-hover:opacity-80">
+                Моральный скотч
+            </span>
+        </a>
+
+        <!-- Переключатель тем -->
+        <div class="flex items-center gap-1 bg-black/5 dark:bg-white/10 p-1 rounded-full backdrop-blur-md">
+            <button onclick="setTheme('lavender')" title="Лаванда" class="w-8 h-8 rounded-full bg-purple-500 hover:scale-110 transition-transform"></button>
+            <button onclick="setTheme('dark')" title="Тёмная" class="w-8 h-8 rounded-full bg-slate-800 hover:scale-110 transition-transform"></button>
+            <button onclick="setTheme('coral')" title="Коралл" class="w-8 h-8 rounded-full bg-rose-500 hover:scale-110 transition-transform"></button>
+        </div>
+    </header>
+
+    <!-- Основной контент 404 -->
+    <main class="max-w-2xl mx-auto w-full text-center my-auto py-12">
+        <div class="bg-card rounded-[32px] p-8 sm:p-12 shadow-xl border border-black/5 dark:border-white/5 backdrop-blur-sm transition-colors">
+            
+            <div class="font-heading text-7xl sm:text-9xl font-bold opacity-30 mb-2">
+                404
+            </div>
+
+            <h1 class="font-heading text-2xl sm:text-4xl font-bold mb-4">
+                Упс! Страница не найдена
+            </h1>
+
+            <p class="text-base sm:text-lg opacity-80 mb-8 max-w-md mx-auto">
+                Кажется, эта страница переместилась или никогда не существовала. Зато проект «Моральный скотч» всегда рядом.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/" id="back-home-btn" class="btn-primary font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 w-full sm:w-auto">
+                    Вернуться на главную
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Нижняя плашка (Подвал) -->
+    <footer class="max-w-4xl mx-auto w-full text-center py-4 text-xs sm:text-sm opacity-60">
+        Социальный проект «Моральный скотч»
+    </footer>
+
+    <script>
+        function setTheme(themeName) {
+            localStorage.setItem('user_theme', themeName);
+            document.documentElement.className = 'theme-' + themeName;
+            document.body.className = 'theme-' + themeName;
+
+            // Обновляем параметры в ссылках для сохранения темы
+            updateLinks(themeName);
+
+            // Обновляем URL
+            const url = new URL(window.location);
+            url.searchParams.set('theme', themeName);
+            window.history.replaceState({}, '', url);
+        }
+
+        function updateLinks(theme) {
+            const homeLink = document.getElementById('home-link');
+            const backBtn = document.getElementById('back-home-btn');
+            
+            if (homeLink) homeLink.href = `/?theme=${theme}`;
+            if (backBtn) backBtn.href = `/?theme=${theme}`;
+        }
+
+        // Инициализация темы и ссылок при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = localStorage.getItem('user_theme') || 'lavender';
+            document.body.className = 'theme-' + currentTheme;
+            updateLinks(currentTheme);
+        });
+    </script>
+</body>
+</html>
