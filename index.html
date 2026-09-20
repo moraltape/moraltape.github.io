@@ -64,7 +64,7 @@
     </script>
 
     <!-- Подключение общего внешнего файла стилей -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-m3-primary selection:text-white">
 
@@ -72,8 +72,8 @@
     <header class="sticky top-0 z-40 bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline/10 transition-colors">
         <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-4">
             
-            <!-- Логотип и Название -->
-            <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('home')">
+                    <!-- Логотип и Название -->
+            <a href="index.html" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0 transition-transform group-hover:scale-105" title="Логотип «Моральный скотч»"></div>
                 <div>
                     <h1 class="text-lg sm:text-xl font-bold tracking-tight text-m3-onSurface leading-tight font-heading">
@@ -83,7 +83,8 @@
                         Социальный проект для молодых авторов
                     </p>
                 </div>
-            </div>
+            </a>
+
 
             <!-- Выбор темы -->
             <div class="flex items-center gap-1.5 bg-m3-surfaceVariant/50 p-1.5 rounded-full border border-m3-outline/20">
