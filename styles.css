@@ -1,0 +1,200 @@
+/* ==========================================================================
+   СОДЕРЖАНИЕ / ИНДЕКС НАВИГАЦИИ:
+   1. СБРОС И БАЗОВЫЕ НАСТРОЙКИ (CSS Reset & Base)
+   2. ТЕМАТИЧЕСКИЕ ПЕРЕМЕННЫЕ MATERIAL DESIGN 3 (M3 Themes)
+      - 2.1. Лавандовая тема (по умолчанию)
+      - 2.2. Тёмная тема
+      - 2.3. Коралловая тема
+   3. СТИЛИЗАЦИЯ ЛОГОТИПА И МАСОК (Dynamic Logo)
+   4. ПЛАШКА И КНОПКА БЫСТРОГО ВЫХОДА (Panic Exit & Anonymity)
+   5. ВЬЮ-ТРАНЗИШНЫ И АНИМАЦИИ (View Transitions & Keyframes)
+   6. ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ (Toast Notifications)
+   7. ВЫДЕЛЕНИЕ И ВСПОМОГАТЕЛЬНЫЕ КЛАССЫ (Utilities & Scrollbars)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. СБРОС И БАЗОВЫЕ НАСТРОЙКИ (CSS Reset & Base)
+   ========================================================================== */
+
+/* Плавный скролл для якорных ссылок и базовые шрифты */
+html {
+    scroll-behavior: smooth;
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--md-bg);
+    color: var(--md-on-surface);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Применение шрифта заголовка */
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Comfortaa', cursive;
+}
+
+/* Сглаживание шрифтов для более четкого отображения */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ==========================================================================
+   2. ТЕМАТИЧЕСКИЕ ПЕРЕМЕННЫЕ MATERIAL DESIGN 3 (M3 Themes)
+   ========================================================================== */
+
+/* --- 2.1. ТЕМА 1: ЛАВАНДА (Theme Lavender - Default) --- */
+:root, .theme-lavender {
+    --md-primary: #6750A4;
+    --md-on-primary: #FFFFFF;
+    --md-primary-container: #EADDFF;
+    --md-on-primary-container: #21005D;
+    
+    --md-surface: #FEF7FF;
+    --md-on-surface: #1D1B20;
+    --md-surface-variant: #E7E0EC;
+    --md-on-surface-variant: #49454F;
+    
+    --md-outline: #79747E;
+    --md-bg: #FEF7FF;
+    --md-card-bg: #FFFFFF;
+}
+
+/* --- 2.2. ТЕМА 2: ТЁМНАЯ (Theme Dark) --- */
+.theme-dark {
+    --md-primary: #D0BCFF;
+    --md-on-primary: #381E72;
+    --md-primary-container: #4F378B;
+    --md-on-primary-container: #EADDFF;
+    
+    --md-surface: #141218;
+    --md-on-surface: #E6E1E5;
+    --md-surface-variant: #49454F;
+    --md-on-surface-variant: #CAC4D0;
+    
+    --md-outline: #938F99;
+    --md-bg: #141218;
+    --md-card-bg: #1D1B20;
+}
+
+/* --- 2.3. ТЕМА 3: КОРАЛЛ (Theme Coral) --- */
+.theme-coral {
+    --md-primary: #984061;
+    --md-on-primary: #FFFFFF;
+    --md-primary-container: #FFD9E2;
+    --md-on-primary-container: #3E001D;
+    
+    --md-surface: #FFF8F8;
+    --md-on-surface: #201A1B;
+    --md-surface-variant: #F4DDCE;
+    --md-on-surface-variant: #524346;
+    
+    --md-outline: #857376;
+    --md-bg: #FFF8F8;
+    --md-card-bg: #FFFFFF;
+}
+
+
+/* ==========================================================================
+   3. СТИЛИЗАЦИЯ ЛОГОТИПА И МАСОК (Dynamic Logo)
+   ========================================================================== */
+
+/* Динамический логотип, меняющий цвет под темой через CSS-маску */
+.dynamic-logo {
+    background-color: var(--md-primary);
+    -webkit-mask: url('https://raw.githubusercontent.com/moraltape/res/main/logo.svg') no-repeat center / contain;
+    mask: url('https://raw.githubusercontent.com/moraltape/res/main/logo.svg') no-repeat center / contain;
+    transition: background-color 0.3s ease;
+}
+
+
+/* ==========================================================================
+   4. ПЛАШКА И КНОПКА БЫСТРОГО ВЫХОДА (Panic Exit & Anonymity)
+   ========================================================================== */
+
+/* Панель анонимности вверху страницы */
+.panic-exit-bar {
+    background-color: rgba(var(--md-surface-variant), 0.9);
+    border-bottom: 1px solid rgba(var(--md-outline), 0.2);
+}
+
+/* Кнопка "Быстрый уход" с эффектом нажатия */
+.panic-exit-bar button {
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.panic-exit-bar button:active {
+    transform: scale(0.95);
+}
+
+
+/* ==========================================================================
+   5. ВЬЮ-ТРАНЗИШНЫ И АНИМАЦИИ (View Transitions & Keyframes)
+   ========================================================================== */
+
+/* Плавный переход между страницами при поддержке View Transitions API[cite: 2] */
+@supports (view-transition-name: root) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.25s;
+        animation-timing-function: ease-in-out;
+    }
+}
+
+/* Простая анимация появления элементов */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+
+/* ==========================================================================
+   6. ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ (Toast Notifications)
+   ========================================================================== */
+
+/* Плашка уведомления при копировании номера[cite: 1] */
+#toast {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+}
+
+
+/* ==========================================================================
+   7. ВЫДЕЛЕНИЕ И ВСПОМОГАТЕЛЬНЫЕ КЛАССЫ (Utilities & Scrollbars)
+   ========================================================================== */
+
+/* Стилизация выделения текста на странице[cite: 1] */
+::selection {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+}
+
+/* Кастомная полоса прокрутки (Scrollbar) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--md-surface);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--md-outline);
+    border-radius: 9999px;
+    border: 2px solid var(--md-surface);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--md-primary);
+}
