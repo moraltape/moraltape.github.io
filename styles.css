@@ -100,8 +100,8 @@ body {
 /* Динамический логотип, меняющий цвет под темой через CSS-маску */
 .dynamic-logo {
     background-color: var(--md-primary);
-    -webkit-mask: url('https://raw.githubusercontent.com/moraltape/res/main/logo.svg') no-repeat center / contain;
-    mask: url('https://raw.githubusercontent.com/moraltape/res/main/logo.svg') no-repeat center / contain;
+    -webkit-mask: url('https://raw.githubusercontent.com/moraltape/res/refs/heads/main/main/mtlogo.svg') no-repeat center / contain;
+    mask: url('https://raw.githubusercontent.com/moraltape/res/refs/heads/main/main/mtlogo.svg') no-repeat center / contain;
     transition: background-color 0.3s ease;
 }
 
