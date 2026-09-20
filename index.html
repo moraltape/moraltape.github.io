@@ -94,8 +94,8 @@
         </div>
     </header>
 
-    <!-- Блок навигации под шапкой -->
-    <nav class="bg-m3-surfaceVariant/30 border-b border-m3-outline/10 py-2 px-4 sticky top-[65px] sm:top-[73px] z-30 backdrop-blur-md">
+    <!-- Блок навигации под шапкой (со скрытием при скролле) -->
+    <nav id="section-nav" class="bg-m3-surfaceVariant/30 border-b border-m3-outline/10 py-2 px-4 sticky top-[65px] sm:top-[73px] z-30 backdrop-blur-md transition-transform duration-300 ease-in-out">
         <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
             <div class="inline-flex items-center gap-1 bg-m3-surfaceVariant/60 p-1 rounded-full text-xs sm:text-sm font-semibold border border-m3-outline/10">
                 <button onclick="showSection('home')" id="nav-home" class="px-4 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary shadow-sm">
@@ -283,7 +283,25 @@
             setTheme(currentTheme);
         });
 
-        // 3. Copy Helpline Number
+        // 3. Auto-Hide Navigation Bar on Scroll Down
+        let lastScrollY = window.scrollY;
+        const sectionNav = document.getElementById('section-nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // Если прокрутили вниз больше чем на 50px — скрываем
+            if (currentScrollY > lastScrollY && currentScrollY > 50) {
+                sectionNav.classList.add('-translate-y-full');
+            } else {
+                // При скролле вверх — возвращаем
+                sectionNav.classList.remove('-translate-y-full');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // 4. Copy Helpline Number
         function copyNumber(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text);
