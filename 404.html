@@ -1,20 +1,34 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="theme-lavender">
 <head>
     <meta charset="UTF-8">
+    <!-- 1. Скрипт предотвращения белого мигания (Anti-Flicker) -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const theme = urlParams.get('theme') || localStorage.getItem('user_theme') || 'lavender';
+            document.documentElement.className = 'theme-' + theme;
+        })();
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 — Страница не найдена | Моральный скотч</title>
-    
-    <!-- Подключение шрифтов Comfortaa и Nunito -->
+
+    <!-- Google Fonts: Comfortaa & Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -23,154 +37,126 @@
                     },
                     colors: {
                         m3: {
-                            lavender: {
-                                bg: '#f5f3ff',
-                                surface: '#ffffff',
-                                primary: '#7c3aed',
-                                primaryHover: '#6d28d9',
-                                text: '#1e1b4b',
-                                secondary: '#4c1d95'
-                            },
-                            dark: {
-                                bg: '#0f172a',
-                                surface: '#1e293b',
-                                primary: '#a78bfa',
-                                primaryHover: '#c4b5fd',
-                                text: '#f8fafc',
-                                secondary: '#cbd5e1'
-                            },
-                            coral: {
-                                bg: '#fff1f2',
-                                surface: '#ffffff',
-                                primary: '#e11d48',
-                                primaryHover: '#be123c',
-                                text: '#4c0519',
-                                secondary: '#881337'
-                            }
+                            primary: 'var(--md-primary)',
+                            onPrimary: 'var(--md-on-primary)',
+                            primaryContainer: 'var(--md-primary-container)',
+                            onPrimaryContainer: 'var(--md-on-primary-container)',
+                            surface: 'var(--md-surface)',
+                            onSurface: 'var(--md-on-surface)',
+                            surfaceVariant: 'var(--md-surface-variant)',
+                            onSurfaceVariant: 'var(--md-on-surface-variant)',
+                            outline: 'var(--md-outline)',
+                            bg: 'var(--md-bg)',
+                            cardBg: 'var(--md-card-bg)',
                         }
+                    },
+                    borderRadius: {
+                        '3xl': '28px',
+                        '4xl': '36px',
                     }
                 }
             }
         }
     </script>
 
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Темы Material You */
-        body.theme-lavender {
-            background-color: #f5f3ff;
-            color: #1e1b4b;
-        }
-        .theme-lavender .bg-card { background-color: #ffffff; }
-        .theme-lavender .btn-primary { background-color: #7c3aed; color: #ffffff; }
-        .theme-lavender .btn-primary:hover { background-color: #6d28d9; }
-
-        body.theme-dark {
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-        .theme-dark .bg-card { background-color: #1e293b; }
-        .theme-dark .btn-primary { background-color: #a78bfa; color: #0f172a; }
-        .theme-dark .btn-primary:hover { background-color: #c4b5fd; }
-
-        body.theme-coral {
-            background-color: #fff1f2;
-            color: #4c0519;
-        }
-        .theme-coral .bg-card { background-color: #ffffff; }
-        .theme-coral .btn-primary { background-color: #e11d48; color: #ffffff; }
-        .theme-coral .btn-primary:hover { background-color: #be123c; }
-    </style>
-
-    <!-- Скрипт подгрузки сохраненной темы перед отображением -->
-    <script>
-        (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let currentTheme = urlParams.get('theme') || localStorage.getItem('user_theme') || 'lavender';
-            localStorage.setItem('user_theme', currentTheme);
-            document.documentElement.className = 'theme-' + currentTheme;
-        })();
-    </script>
+    <!-- Подключение общего внешнего файла стилей -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="theme-lavender min-h-screen flex flex-col justify-between p-4 sm:p-8">
+<body class="min-h-screen flex flex-col justify-between selection:bg-m3-primary selection:text-white">
 
-    <!-- Шапка без логотипа -->
-    <header class="max-w-4xl mx-auto w-full flex items-center justify-between py-4">
-        <a href="/" id="home-link" class="flex items-center group">
-            <span class="font-heading font-bold text-lg sm:text-xl transition-opacity group-hover:opacity-80">
-                Моральный скотч
-            </span>
-        </a>
+    <!-- Шапка сайта -->
+    <header class="sticky top-0 z-40 bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline/10 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-4">
+            
+            <!-- Логотип и заголовок -->
+            <a href="/" id="home-link" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0 transition-transform group-hover:scale-105" title="Логотип «Моральный скотч»"></div>
+                <span class="font-heading font-bold text-lg sm:text-xl text-m3-onSurface transition-opacity group-hover:opacity-80">
+                    Моральный скотч
+                </span>
+            </a>
 
-        <!-- Переключатель тем -->
-        <div class="flex items-center gap-1 bg-black/5 dark:bg-white/10 p-1 rounded-full backdrop-blur-md">
-            <button onclick="setTheme('lavender')" title="Лаванда" class="w-8 h-8 rounded-full bg-purple-500 hover:scale-110 transition-transform"></button>
-            <button onclick="setTheme('dark')" title="Тёмная" class="w-8 h-8 rounded-full bg-slate-800 hover:scale-110 transition-transform"></button>
-            <button onclick="setTheme('coral')" title="Коралл" class="w-8 h-8 rounded-full bg-rose-500 hover:scale-110 transition-transform"></button>
+            <!-- Переключатель тем -->
+            <div class="flex items-center gap-1.5 bg-m3-surfaceVariant/50 p-1.5 rounded-full border border-m3-outline/20">
+                <button onclick="setTheme('lavender')" id="btn-theme-lavender" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Лаванда"></button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Тёмная"></button>
+                <button onclick="setTheme('coral')" id="btn-theme-coral" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Коралл"></button>
+            </div>
         </div>
     </header>
 
     <!-- Основной контент 404 -->
-    <main class="max-w-2xl mx-auto w-full text-center my-auto py-12">
-        <div class="bg-card rounded-[32px] p-8 sm:p-12 shadow-xl border border-black/5 dark:border-white/5 backdrop-blur-sm transition-colors">
+    <main class="max-w-2xl mx-auto w-full text-center my-auto py-12 px-4">
+        <div class="bg-m3-cardBg rounded-4xl p-8 sm:p-12 border border-m3-outline/10 shadow-lg backdrop-blur-sm transition-colors">
             
-            <div class="font-heading text-7xl sm:text-9xl font-bold opacity-30 mb-2">
+            <div class="font-heading text-7xl sm:text-9xl font-bold text-m3-primary opacity-30 mb-2">
                 404
             </div>
 
-            <h1 class="font-heading text-2xl sm:text-4xl font-bold mb-4">
+            <h1 class="font-heading text-2xl sm:text-4xl font-bold mb-4 text-m3-onSurface">
                 Упс! Страница не найдена
             </h1>
 
-            <p class="text-base sm:text-lg opacity-80 mb-8 max-w-md mx-auto">
+            <p class="text-sm sm:text-base text-m3-onSurfaceVariant mb-8 max-w-md mx-auto leading-relaxed">
                 Кажется, эта страница переместилась или никогда не существовала. Зато проект «Моральный скотч» всегда рядом.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="/" id="back-home-btn" class="btn-primary font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 w-full sm:w-auto">
+                <a href="/" id="back-home-btn" class="bg-m3-primary text-m3-onPrimary font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-lg hover:opacity-90 transition-all duration-200 w-full sm:w-auto">
                     Вернуться на главную
                 </a>
             </div>
         </div>
     </main>
 
-    <!-- Нижняя плашка (Подвал) -->
-    <footer class="max-w-4xl mx-auto w-full text-center py-4 text-xs sm:text-sm opacity-60">
-        Социальный проект «Моральный скотч»
+    <!-- Подвал -->
+    <footer class="bg-m3-surfaceVariant/40 border-t border-m3-outline/15 py-6 px-4 text-center text-xs sm:text-sm text-m3-onSurfaceVariant">
+        <div class="max-w-6xl mx-auto space-y-2">
+            <div class="flex justify-center items-center gap-2">
+                <div class="w-5 h-5 dynamic-logo"></div>
+                <span class="font-bold font-heading text-m3-onSurface">Социальный проект «Моральный скотч»</span>
+            </div>
+            <p class="opacity-70 text-[11px]">Все материалы создаются в образовательных и гуманитарных целях.</p>
+        </div>
     </footer>
 
+    <!-- Скрипт логики и управления темами -->
     <script>
         function setTheme(themeName) {
+            const validThemes = ['lavender', 'dark', 'coral'];
+            if (!validThemes.includes(themeName)) return;
+
             localStorage.setItem('user_theme', themeName);
             document.documentElement.className = 'theme-' + themeName;
-            document.body.className = 'theme-' + themeName;
 
-            // Обновляем параметры в ссылках для сохранения темы
-            updateLinks(themeName);
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('theme', themeName);
+                window.history.replaceState({}, '', url.toString());
+            } catch (e) {
+                console.error("Не удалось обновить URL:", e);
+            }
 
-            // Обновляем URL
-            const url = new URL(window.location);
-            url.searchParams.set('theme', themeName);
-            window.history.replaceState({}, '', url);
+            updateOutgoingLinksTheme(themeName);
         }
 
-        function updateLinks(theme) {
-            const homeLink = document.getElementById('home-link');
-            const backBtn = document.getElementById('back-home-btn');
-            
-            if (homeLink) homeLink.href = `/?theme=${theme}`;
-            if (backBtn) backBtn.href = `/?theme=${theme}`;
+        function updateOutgoingLinksTheme(themeName) {
+            document.querySelectorAll('a').forEach(anchor => {
+                const href = anchor.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('tel:') && !href.startsWith('javascript:')) {
+                    try {
+                        const targetUrl = new URL(href, window.location.origin);
+                        targetUrl.searchParams.set('theme', themeName);
+                        anchor.setAttribute('href', targetUrl.toString());
+                    } catch (e) {}
+                }
+            });
         }
 
-        // Инициализация темы и ссылок при загрузке
+        // Инициализация темы при загрузке
         document.addEventListener('DOMContentLoaded', () => {
             const currentTheme = localStorage.getItem('user_theme') || 'lavender';
-            document.body.className = 'theme-' + currentTheme;
-            updateLinks(currentTheme);
+            setTheme(currentTheme);
         });
     </script>
 </body>
