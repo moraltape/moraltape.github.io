@@ -2,6 +2,15 @@
 <html lang="ru" class="theme-lavender">
 <head>
     <meta charset="UTF-8">
+    <!-- Скрипт предотвращения белого мигания (Anti-Flicker) -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const theme = urlParams.get('theme') || localStorage.getItem('user_theme') || 'lavender';
+            document.documentElement.className = 'theme-' + theme;
+        })();
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Социальный проект «Моральный скотч»</title>
 
@@ -10,6 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -51,144 +63,58 @@
         }
     </script>
 
-    <style>
-        /* Theme 1: Lavender (Default Light) */
-        .theme-lavender {
-            --md-primary: #6750A4;
-            --md-on-primary: #FFFFFF;
-            --md-primary-container: #EADDFF;
-            --md-on-primary-container: #21005D;
-            --md-surface: #FFFBFE;
-            --md-on-surface: #1C1B1F;
-            --md-surface-variant: #E7E0EC;
-            --md-on-surface-variant: #49454F;
-            --md-outline: #79747E;
-            --md-bg: #F6F2FA;
-            --md-card-bg: #FFFFFF;
-        }
-
-        /* Theme 2: Material Dark */
-        .theme-dark {
-            --md-primary: #D0BCFF;
-            --md-on-primary: #381E72;
-            --md-primary-container: #4F378B;
-            --md-on-primary-container: #EADDFF;
-            --md-surface: #1C1B1F;
-            --md-on-surface: #E6E1E5;
-            --md-surface-variant: #49454F;
-            --md-on-surface-variant: #CAC4D0;
-            --md-outline: #938F96;
-            --md-bg: #141218;
-            --md-card-bg: #211F26;
-        }
-
-        /* Theme 3: Coral Sunset */
-        .theme-coral {
-            --md-primary: #984061;
-            --md-on-primary: #FFFFFF;
-            --md-primary-container: #FFD9E2;
-            --md-on-primary-container: #3E001D;
-            --md-surface: #FFF8F8;
-            --md-on-surface: #201A1B;
-            --md-surface-variant: #F2DDE1;
-            --md-on-surface-variant: #524346;
-            --md-outline: #857376;
-            --md-bg: #FAF0F2;
-            --md-card-bg: #FFFFFF;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--md-bg);
-            color: var(--md-on-surface);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Comfortaa', cursive;
-        }
-
-        /* Dynamic SVG Logo Masking */
-        .dynamic-logo {
-            background-color: var(--md-primary);
-            mask: url('https://raw.githubusercontent.com/moraltape/res/refs/heads/main/main/mtlogo.svg') no-repeat center / contain;
-            -webkit-mask: url('https://raw.githubusercontent.com/moraltape/res/refs/heads/main/main/mtlogo.svg') no-repeat center / contain;
-            transition: background-color 0.3s ease;
-        }
-    </style>
-
-    <script>
-        (function() {
-            // Read theme from URL parameter '?theme=...' or fall back to localStorage
-            const urlParams = new URLSearchParams(window.location.search);
-            let themeParam = urlParams.get('theme');
-            
-            const validThemes = ['lavender', 'dark', 'coral'];
-            let currentTheme = 'lavender';
-
-            if (themeParam && validThemes.includes(themeParam)) {
-                currentTheme = themeParam;
-            } else {
-                const storedTheme = localStorage.getItem('user_theme');
-                if (storedTheme && validThemes.includes(storedTheme)) {
-                    currentTheme = storedTheme;
-                }
-            }
-
-            // Save active theme back to localStorage
-            localStorage.setItem('user_theme', currentTheme);
-
-            // Apply theme class to document element immediately
-            document.documentElement.className = 'theme-' + currentTheme;
-        })();
-    </script>
+    <!-- Подключение общего внешнего файла стилей -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-m3-primary selection:text-white">
 
+    <!-- Основная шапка (Только Логотип, Название и Выбор темы) -->
     <header class="sticky top-0 z-40 bg-m3-surface/90 backdrop-blur-md border-b border-m3-outline/10 transition-colors">
-        <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-4">
             
-            <!-- Logo & Title -->
+            <!-- Логотип и Название -->
             <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('home')">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 dynamic-logo shrink-0 transition-transform group-hover:scale-105" title="Логотип «Моральный скотч»"></div>
                 <div>
-                    <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-m3-onSurface leading-tight">
-                        Социальный проект «Моральный скотч»
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight text-m3-onSurface leading-tight font-heading">
+                        Моральный скотч
                     </h1>
-                    <p class="text-xs sm:text-sm text-m3-onSurfaceVariant font-medium">
-                        Платформа для молодых авторов
+                    <p class="text-xs text-m3-onSurfaceVariant font-medium hidden sm:block">
+                        Социальный проект для молодых авторов
                     </p>
                 </div>
             </div>
 
-            <!-- Navigation & Theme Switcher -->
-            <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
-                <nav class="flex items-center gap-1 bg-m3-surfaceVariant/40 p-1 rounded-full text-xs sm:text-sm font-semibold border border-m3-outline/10">
-                    <button onclick="showSection('home')" id="nav-home" class="px-3.5 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary shadow-sm">
-                        Главная
-                    </button>
-                    <button onclick="showSection('articles')" id="nav-articles" class="px-3.5 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
-                        Статьи
-                    </button>
-                    <button onclick="showSection('instructions')" id="nav-instructions" class="px-3.5 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
-                        Инструкции
-                    </button>
-                </nav>
-
-                <!-- Dynamic Material Theme Chooser -->
-                <div class="flex items-center gap-1.5 bg-m3-surfaceVariant/50 p-1.5 rounded-full border border-m3-outline/20">
-                    <button onclick="setTheme('lavender')" id="btn-theme-lavender" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Лаванда"></button>
-                    <button onclick="setTheme('dark')" id="btn-theme-dark" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Тёмная"></button>
-                    <button onclick="setTheme('coral')" id="btn-theme-coral" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Коралл"></button>
-                </div>
+            <!-- Выбор темы -->
+            <div class="flex items-center gap-1.5 bg-m3-surfaceVariant/50 p-1.5 rounded-full border border-m3-outline/20">
+                <button onclick="setTheme('lavender')" id="btn-theme-lavender" class="w-6 h-6 rounded-full bg-[#6750A4] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Лаванда"></button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="w-6 h-6 rounded-full bg-[#1C1B1F] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Тёмная"></button>
+                <button onclick="setTheme('coral')" id="btn-theme-coral" class="w-6 h-6 rounded-full bg-[#984061] border-2 border-white/80 hover:scale-110 transition-transform shadow-sm" title="Тема: Коралл"></button>
             </div>
         </div>
     </header>
 
+    <!-- Блок навигации под шапкой -->
+    <nav class="bg-m3-surfaceVariant/30 border-b border-m3-outline/10 py-2 px-4 sticky top-[65px] sm:top-[73px] z-30 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
+            <div class="inline-flex items-center gap-1 bg-m3-surfaceVariant/60 p-1 rounded-full text-xs sm:text-sm font-semibold border border-m3-outline/10">
+                <button onclick="showSection('home')" id="nav-home" class="px-4 py-1.5 rounded-full transition-all bg-m3-primary text-m3-onPrimary shadow-sm">
+                    Главная
+                </button>
+                <button onclick="showSection('articles')" id="nav-articles" class="px-4 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
+                    Статьи
+                </button>
+                <button onclick="showSection('instructions')" id="nav-instructions" class="px-4 py-1.5 rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface hover:bg-m3-surfaceVariant/60">
+                    Инструкции
+                </button>
+            </div>
+        </div>
+    </nav>
+
     <main class="max-w-6xl mx-auto px-4 py-6 sm:py-10 flex-grow w-full">
 
         <!-- ================= 1. HOME SECTION ================= -->
-        <div id="section-home" class="space-y-8 sm:space-y-12">
+        <div id="section-home" class="space-y-8 sm:space-y-12 animate-fade-in">
             
             <!-- Mission Banner -->
             <section class="text-center max-w-3xl mx-auto py-8 sm:py-12 px-4 bg-m3-cardBg rounded-4xl border border-m3-outline/10 shadow-m3-sm transition-colors">
@@ -206,7 +132,7 @@
         </div>
 
         <!-- ================= 2. ARTICLES SECTION ================= -->
-        <div id="section-articles" class="hidden space-y-6">
+        <div id="section-articles" class="hidden space-y-6 animate-fade-in">
             <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
                 <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Статьи</h2>
                 <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline flex items-center gap-1">
@@ -230,7 +156,7 @@
         </div>
 
         <!-- ================= 3. INSTRUCTIONS SECTION ================= -->
-        <div id="section-instructions" class="hidden space-y-6">
+        <div id="section-instructions" class="hidden space-y-6 animate-fade-in">
             <div class="flex items-center justify-between border-b border-m3-outline/20 pb-4">
                 <h2 class="text-2xl sm:text-3xl font-bold text-m3-onSurface">Инструкции</h2>
                 <button onclick="showSection('home')" class="text-xs sm:text-sm font-semibold text-m3-primary hover:underline flex items-center gap-1">
@@ -241,17 +167,13 @@
             <!-- Instructions Grid Container -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
 
-                <!-- ==================================================================== -->
-                <!-- Шаблон карточки инструкции (Скопируйте этот блок для добавления новой) -->
-                <!-- ==================================================================== -->
+                <!-- Карточка инструкции -->
                 <a href="https://moraltape.github.io/instr/joint/vyhod" class="instruction-card group relative block overflow-hidden rounded-3xl aspect-[3/4] shadow-m3-sm hover:shadow-m3-md transition-all duration-300 transform hover:-translate-y-1 border border-m3-outline/15 bg-m3-surfaceVariant/30">
-                    <!-- Обложка -->
                     <img src="https://raw.githubusercontent.com/moraltape/res/refs/heads/main/instr/joint/vyhod/cover.jpg" 
                          alt="Буллинг что это, и как с ним бороться?" 
                          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                          loading="lazy" />
                     
-                    <!-- Тёмный градиент для читаемости текста поверх обложки -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex flex-col justify-end p-4 sm:p-5 text-white">
                         <span class="inline-block self-start bg-m3-primary text-m3-onPrimary text-[10px] sm:text-[11px] font-bold px-3 py-1 rounded-full mb-2 shadow-sm">
                             Инструкция
@@ -261,37 +183,9 @@
                         </h3>
                     </div>
                 </a>
-                <!-- ================= Конец шаблона карточки ================= -->
 
             </div>
         </div>
-
-        <!-- Pinned Helpline Banner (Bottom Floating/Sticky across all tabs) -->
-        <section class="sticky bottom-3 z-30 mt-8 mb-1 bg-m3-surface/95 backdrop-blur-md border border-m3-primary/30 shadow-m3-md rounded-3xl py-2.5 px-4 sm:py-3 sm:px-6 transition-all">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-m3-primaryContainer text-m3-primary flex items-center justify-center text-sm shrink-0">
-                        📞
-                    </div>
-                    <div>
-                        <h4 class="text-xs sm:text-sm font-bold text-m3-onSurface leading-snug">
-                            Нужна психологическая помощь?
-                        </h4>
-                        <p class="text-xs text-m3-onSurfaceVariant">
-                            Бесплатно, анонимно и круглосуточно: <strong class="text-m3-primary font-bold">8-800-200-01-22</strong>
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <a href="tel:88002000122" class="px-4 py-1.5 bg-m3-primary text-m3-onPrimary font-bold rounded-full text-xs hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm">
-                        Позвонить
-                    </a>
-                    <button onclick="copyNumber('88002000122')" class="px-3.5 py-1.5 bg-m3-surfaceVariant/60 text-m3-onSurface font-semibold rounded-full text-xs border border-m3-outline/20 hover:bg-m3-surfaceVariant transition-colors whitespace-nowrap">
-                        Скопировать
-                    </button>
-                </div>
-            </div>
-        </section>
 
     </main>
 
@@ -352,18 +246,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. Theme Manager with URL Parameter Transmission & LocalStorage Persistence
+        // 2. Theme Manager
         function setTheme(themeName) {
             const validThemes = ['lavender', 'dark', 'coral'];
             if (!validThemes.includes(themeName)) return;
 
-            // 1. Apply theme to HTML document
             document.documentElement.className = 'theme-' + themeName;
-
-            // 2. Persist in LocalStorage
             localStorage.setItem('user_theme', themeName);
 
-            // 3. Update URL query parameter seamlessly without page reload
             try {
                 const url = new URL(window.location.href);
                 url.searchParams.set('theme', themeName);
@@ -372,11 +262,9 @@
                 console.error("URL update prevented:", e);
             }
 
-            // 4. Update outgoing links to carry the current theme
             updateOutgoingLinksTheme(themeName);
         }
 
-        // Propagate ?theme= parameter to external/sub-domain links automatically
         function updateOutgoingLinksTheme(themeName) {
             document.querySelectorAll('a').forEach(anchor => {
                 const href = anchor.getAttribute('href');
@@ -385,31 +273,17 @@
                         const targetUrl = new URL(href, window.location.origin);
                         targetUrl.searchParams.set('theme', themeName);
                         anchor.setAttribute('href', targetUrl.toString());
-                    } catch (e) {
-                        // Relative path or plain URL handling
-                    }
+                    } catch (e) {}
                 }
             });
         }
 
-        // Initialize Theme on Page Load
         document.addEventListener('DOMContentLoaded', () => {
             const currentTheme = localStorage.getItem('user_theme') || 'lavender';
             setTheme(currentTheme);
         });
 
-        // 3. Quick Panic Exit Shortcut (Esc key redirect)
-        function panicExit() {
-            window.location.replace('https://ya.ru');
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                panicExit();
-            }
-        });
-
-        // 4. Copy Helpline Number to Clipboard
+        // 3. Copy Helpline Number
         function copyNumber(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text);
