@@ -123,8 +123,8 @@ body {
 
 /* Панель анонимности вверху страницы */
 .panic-exit-bar {
-    background-color: color-mix(in srgb, var(--md-surface-variant) 90%, transparent);
-    border-bottom: 1px solid color-mix(in srgb, var(--md-outline) 20%, transparent);
+    background-color: var(--md-surface-variant);
+    border-bottom: 1px solid var(--md-outline);
 }
 
 /* Кнопка "Быстрый уход" с эффектом нажатия */
