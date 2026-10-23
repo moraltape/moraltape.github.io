@@ -59,20 +59,31 @@ body {
 }
 
 /* --- 2.2. ТЕМА 2: ТЁМНАЯ (Theme Dark) --- */
+/* Обновлённая палитра: мягкий сине-графитовый фон вместо чисто чёрного,
+   приглушённый лавандовый акцент и повышенный контраст текста для читаемости */
 .theme-dark {
-    --md-primary: #D0BCFF;
-    --md-on-primary: #381E72;
-    --md-primary-container: #4F378B;
-    --md-on-primary-container: #EADDFF;
-    
-    --md-surface: #141218;
-    --md-on-surface: #E6E1E5;
-    --md-surface-variant: #49454F;
-    --md-on-surface-variant: #CAC4D0;
-    
-    --md-outline: #938F99;
-    --md-bg: #141218;
-    --md-card-bg: #1D1B20;
+    color-scheme: dark;
+
+    --md-primary: #C5B3FF;
+    --md-on-primary: #1F1235;
+    --md-primary-container: #3E2F6E;
+    --md-on-primary-container: #E6DDFF;
+
+    --md-surface: #171A21;
+    --md-on-surface: #E9EAF2;
+    --md-surface-variant: #2B2F3A;
+    --md-on-surface-variant: #C3C7D6;
+
+    --md-outline: #8B90A3;
+    --md-bg: #12141A;
+    --md-card-bg: #1E222C;
+}
+
+/* Мягкие тени для карточек в тёмной теме (читаемее на глубоком фоне) */
+.theme-dark .shadow-sm,
+.theme-dark .shadow-md,
+.theme-dark .shadow-lg {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* --- 2.3. ТЕМА 3: КОРАЛЛ (Theme Coral) --- */
@@ -112,8 +123,8 @@ body {
 
 /* Панель анонимности вверху страницы */
 .panic-exit-bar {
-    background-color: rgba(var(--md-surface-variant), 0.9);
-    border-bottom: 1px solid rgba(var(--md-outline), 0.2);
+    background-color: var(--md-surface-variant);
+    border-bottom: 1px solid var(--md-outline);
 }
 
 /* Кнопка "Быстрый уход" с эффектом нажатия */
